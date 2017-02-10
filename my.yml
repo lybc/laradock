@@ -41,13 +41,16 @@ services:
         ports:
            - "2222:22"
         tty: true
-### Python Container ########################################
-    python:
-        build: 
-            context: ./python
-            dockerfile: Dockerfile2.7
-        links:
-            - workspace
+
+### hexo blog Container #####################################
+
+    hexo:
+        build: ./hexo
+        volumes:
+          - ./code/blog:/blog
+        ports:
+          - "4000:4000"
+        command: hexo server -i 0.0.0.0
 ### PHP-FPM Container #######################################
 
     php-fpm:
@@ -374,5 +377,5 @@ volumes:
         driver: "local"
     sessions:    ## nothing is connected to this (- ./data/sessions:/sessions)
         driver: "local"
-    python:
+    hexo:
         driver: "local"
